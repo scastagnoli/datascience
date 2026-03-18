@@ -122,7 +122,7 @@ https://www.w3schools.com/python/pandas/pandas_csv.asp
 Assegnato un file CSV possiamo generare il DataFrame corrispondente nel modo seguente:
 ```python
 import pandas as pd
-df = pd.read_csv("nomeFile.csv)
+df = pd.read_csv("nomeFile.csv")
 ```
 Una volta pronto il DataFrame possiamo iniziare a estrarre i dati:
 ```df.describe()```: visualizzazione di alcune statistiche del dataframe
