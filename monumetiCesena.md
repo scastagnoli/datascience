@@ -496,5 +496,3 @@ Questo è un buon esempio di **studio pandas completo**, perché contiene:
 * **visualizzazione**
 * **pipeline di machine learning**
 * **valutazione del modello**
-
-Se vuoi, nel messaggio successivo posso trasformarlo in una **relazione strutturata stile compito/progetto universitario**, con introduzione, metodologia, risultati e conclusioni.
