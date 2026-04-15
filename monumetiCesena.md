@@ -1,3 +1,5 @@
+## Esempio analisi dati : analisi categoriale  
+
 Possiamo condurre uno studio sul file https://servizisit.unionevallesavio.it/geonextservices/gnsvcopendata/csv/1/OD_MONUMENTI_SDO, ottenuto cercando su motore di ricerca Google la stringa "open data csv" e cercando i dati relativi a Cesena, dividendolo in tre blocchi:
 
 1. **data cleaning**
@@ -191,7 +193,7 @@ Questo aiuta a evitare problemi tipo `"Cesena"` e `"CESENA"` trattati come categ
 print(df.describe(include="all"))   #visualizza tutte le colonne (all)
 ```
 
-Per le variabili numeriche puoi anche fare:
+Per le variabili numeriche possiamo anche fare:
 
 ```python
 print(df[["OBJECTID", "COD_ISTAT", "ANNO_COLLO", "NUM_DOCU"]].describe())
@@ -225,7 +227,10 @@ plt.show()
 ## 5.2 Distribuzione dei tipi di monumento
 
 ```python
-print(df["TIPO"].value_counts())
+print(df["TIPO"].value_counts())    #conto le frequenzecon cui compaiono gli elementi della colonna TIPO
+df["TIPO"].value_counts(normalize=True).head(3) #come prima ma visualizzo i valori normalizzati
+(df["TIPO"].value_counts(normalize=True).head(3) * 100).round(2).astype(str) + "%"  #visualizza i valori nel formato 12.34%
+(df["LOCALITA"].value_counts(normalize=True).sort_values(ascending=False).head(3) *100).round(2).astype(str) + "%" #come prima ma permette di inserire l'opzione di visualizzazione in senso ascendente o discendente
 ```
 
 Nel dataset i tipi più frequenti sono:
@@ -236,7 +241,9 @@ Nel dataset i tipi più frequenti sono:
 * **BUSTO**
 * **CIPPO**
 
-Questa è già una prima analisi di frequenza molto utile.
+Questa è già una prima analisi di frequenza molto utile.  
+Del risultato ottenuto possiamo estrarre i primi tre (```head(3)```) o gli ultimi 3 (```(tail(3)```).  
+
 
 ---
 
@@ -245,8 +252,18 @@ Questa è già una prima analisi di frequenza molto utile.
 ```python
 print(df["LOCALITA"].value_counts().head(10))
 ```
+***Attenzione***: se non applicato il criterio del paragrafo 4.6 il risultato non è corretto perchè le maiuscole e le minuscole sono trattate diversamente. Devo quindi applicare la sostituzione:
+```python
+for col in text_cols:
+    df[col] = df[col].astype(str).str.strip().str.upper()
+```
 
-Dal file, la località dominante è **CESENA**, seguita da altre frazioni/località con frequenze molto più basse.
+
+Dal file, la località dominante è **CESENA**, seguita da altre frazioni/località con frequenze molto più basse.  
+Posso visualizzare i risultati in ordine inverso:
+```python
+
+```
 
 ---
 
@@ -268,12 +285,11 @@ Qui è meglio usare la **mediana**, perché gli anni mancanti o eventuali anomal
 tab = pd.crosstab(df["LOCALITA"], df["TIPO"])
 print(tab.head())
 ```
-
+Visualizza una ```tabella di contingenza```, cioè una LOCALITA per ogni riga e un TIPO per ogni colonna: l'incrocio rappresenta quanti monumenti di quel tipo sono presenti in quella località.  
 Oppure una vista più leggibile con percentuali:
 
 ```python
-tab_pct = pd.crosstab(df["LOCALITA"], df["TIPO"], normalize="index") * 100
-print(tab_pct.round(2))
+tab_pct = (pd.crosstab(df["LOCALITA"], df["TIPO"], normalize="index") * 100).round(2) + "%")
 ```
 
 ---
