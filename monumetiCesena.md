@@ -178,7 +178,7 @@ text_cols = ["TIPO", "LOCALITA", "UBICAZIONE", "OPERA"]
 
 for col in text_cols:
     df[col] = df[col].astype(str).str.strip().str.upper()
-    #fa 3 cose: converte la colonna in stringa, elimina spazi all'inizio e alla fine, converte in maiuscolo
+    #fa 3 cose: converte ogni elemento della colonna in stringa, elimina spazi all'inizio e alla fine, converte in maiuscolo
 ```
 
 Questo aiuta a evitare problemi tipo `"Cesena"` e `"CESENA"` trattati come categorie diverse.
